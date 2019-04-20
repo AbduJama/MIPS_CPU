@@ -1,0 +1,67 @@
+-- Single Clock Cycle MIPS Implementation --
+
+library ieee;
+use ieee.std_logic_1164.all;
+--use ieee.std_logic_signed.all;
+use ieee.numeric_std.all;  -- can represent a SIGNED or USIGNED number in vector form allowing it to be used for arithmetic operations
+
+entity MIPS_CPU is
+
+	port( clk, reset : in std_logic;
+			stop : out boolean
+		 );
+		
+end entity MIPS_CPU;
+
+architecture sequential of MIPS_CPU is
+
+-- Opcode Constants --
+constant addiu : std_logic_vector(5 downto 0):="001001";
+constant beq : std_logic_vector(5 downto 0):= "000100";
+constant bne : std_logic_vector(5 downto 0):= "000101";
+constant j : std_logic_vector(5 downto 0):= "000010";
+constant lw : std_logic_vector(5 downto 0):= "100011";
+constant sltiu : std_logic_vector(5 downto 0) := "001011";
+constant sw : std_logic_vector(5 downto 0):= "101011";
+constant empty : std_logic_vector(5 downto 0) := "000000";
+
+-- Function Constants (looked at if opcode is "empty") --
+constant addu_fun : std_logic_vector(5 downto 0) := "100001";
+constant sltu_fun : std_logic_vector(5 downto 0) := "101011";
+constant subu_fun : std_logic_vector(5 downto 0) := "100011";
+constant syscall_fun : std_logic_vector(5 downto 0) := "001100";
+
+
+signal instruct : std_logic_vector(31 downto 0) := (others => '0');
+signal opcode : std_logic_vector(5 downto 0);
+signal rs, rt, rd : integer;
+signal funct : std_logic_vector(5 downto 0);
+signal immed : std_logic_vector(15 downto 0);
+signal address : std_logic_vector(25 downto 0);
+signal PC : integer := 0;
+--signal done : boolean := TRUE;
+
+-- Constants for memory fixes -- 
+constant memory_fix : std_logic_vector(15 downto 0) := X"2000";
+constant shift_4_fix : std_logic_vector(15 downto 0) := X"0004";
+constant shift_4neg_fix : std_logic_vector(15 downto 0) := X"FFFC";
+constant shift_8_fix : std_logic_vector(15 downto 0) := X"0008";
+constant shift_8neg_fix : std_logic_vector(15 downto 0) := X"FFF8";
+
+type memory_type is array (0 to 31) of std_logic_vector(31 downto 0);
+signal ROM : memory_type;
+signal RAM : memory_type := (others => (others => '0'));
+signal RegisterFile : memory_type := (others => (others => '0'));
+
+
+begin
+
+
+
+
+
+
+
+
+
+end architecture sequential;
